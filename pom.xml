@@ -43,6 +43,18 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Flyway (Suporte à migrations) -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+
+		<!-- Dozer (Mapeamento e conversão de entidades para DTO) -->
 		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
