@@ -9,8 +9,11 @@ import static br.com.erudio.mapper.ObjectMapper.parseObject;
 import br.com.erudio.mapper.custom.PersonMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repository.personRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,7 +36,16 @@ public class PersonServices {
     public PersonDTO findById(Long id) {
         logger.info("Returning one entity on data base");
 
-        return parseObject(repository.findById(id), PersonDTO.class);
+        var person = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found!"));
+
+        var personDto = parseObject(person, PersonDTO.class);
+
+        personDto.setPhoneNumber("(+55) (34) 9876-54321");
+        personDto.setBirthday(new Date());
+        personDto.setSalary("15.000");
+        personDto.setPassword("123456789");
+
+        return personDto;
     }
 
     public PersonDTO update(PersonDTO person) {
