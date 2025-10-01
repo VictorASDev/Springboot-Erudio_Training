@@ -17,33 +17,16 @@ import java.util.Objects;
 //Permite personalizar a ordem e o formato de um JSON
 //@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
 
-@JsonFilter("personFilter")
 public class PersonDTO implements Serializable {
 
     private Long id;
-
-    //Permite personalizar um parâmetro do JSON
-    //@JsonProperty("first_name")
     private String firstName;
-
-    //@JsonProperty("last_name")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String phoneNumber;
-
     private String password;
-
     private String salary;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthday;
     private String address;
-
-    //Não serializa o parâmetro
-    //@JsonIgnore
-    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
 
     public PersonDTO() {
