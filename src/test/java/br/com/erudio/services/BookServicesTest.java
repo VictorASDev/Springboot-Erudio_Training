@@ -1,6 +1,7 @@
 package br.com.erudio.services;
 
 import br.com.erudio.data.dto.v1.BookDTO;
+import br.com.erudio.exception.RequiredObjectIsNullException;
 import br.com.erudio.model.Book;
 import br.com.erudio.model.Person;
 import br.com.erudio.repository.BookRepository;
@@ -38,6 +39,7 @@ class BookServicesTest {
     @BeforeEach
     void setUp() {
         input = new MockBook();
+        this.service = new BookServices(repository);
     }
 
     @Test
@@ -262,16 +264,19 @@ class BookServicesTest {
 
     @Test
     void create() {
-        var book = input.mockBook();
-        var persistedBook = book;
-
+        var persistedBook = input.mockBook(1);
         persistedBook.setId(1L);
 
         BookDTO dto = input.mockBookDto(1);
 
-        when(repository.save(book)).thenReturn(persistedBook);
+        // Use argument matcher for save
+        when(repository.save(any(Book.class))).thenReturn(persistedBook);
 
         var result = service.create(dto);
+
+        // Optionally assert
+        assertEquals(1L, result.getId());
+
 
         LocalDateTime fixedDate = LocalDateTime.of(2025, 10, 23, 10, 0, 0);
 
@@ -323,7 +328,7 @@ class BookServicesTest {
 
     @Test
     void update() {
-        var book = input.mockBook();
+        var book = input.mockBook(1);
         var persistedBook = book;
         LocalDateTime fixedDate = LocalDateTime.of(2025, 10, 23, 10, 0, 0);
         persistedBook.setId(1L);
@@ -394,5 +399,31 @@ class BookServicesTest {
         verify(repository, times(1)).findById(anyLong());
         verify(repository, times(1)).delete(any(Book.class));
         verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void testCreateWithNull() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                () -> {
+                    service.create(null);
+                });
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void testUpdateWithNull() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                () -> {
+                    service.update(null);
+                });
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

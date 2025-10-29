@@ -18,6 +18,7 @@ public class Book extends RepresentationModel<Book> implements Serializable {
     private String author;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime launchDate;
 
     @Column(nullable = false)

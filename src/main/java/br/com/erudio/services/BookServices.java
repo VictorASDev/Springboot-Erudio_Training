@@ -54,6 +54,8 @@ public class BookServices {
     }
 
     public BookDTO update(BookDTO book) {
+        if(book == null) throw new RequiredObjectIsNullException();
+
         var bookOnData = repository.findById(book.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Book not found on data!"));
 
