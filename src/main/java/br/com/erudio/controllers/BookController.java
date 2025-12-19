@@ -3,11 +3,16 @@ package br.com.erudio.controllers;
 import br.com.erudio.data.dto.v1.BookDTO;
 import br.com.erudio.services.BookServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -43,10 +48,15 @@ public class BookController implements br.com.erudio.controllers.docs.BookContro
             }
     )
     @Override
-    public ResponseEntity<List<BookDTO>> findAll() {
-        var res = services.findAll();
+    public ResponseEntity<PagedModel<EntityModel<BookDTO>>> findAll (
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "12") Integer size,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction
+    ) {
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "title"));
 
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(services.findAll(pageable));
     }
 
     @PostMapping(

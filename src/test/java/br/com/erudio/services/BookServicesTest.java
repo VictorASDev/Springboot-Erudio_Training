@@ -3,7 +3,6 @@ package br.com.erudio.services;
 import br.com.erudio.data.dto.v1.BookDTO;
 import br.com.erudio.exception.RequiredObjectIsNullException;
 import br.com.erudio.model.Book;
-import br.com.erudio.model.Person;
 import br.com.erudio.repository.BookRepository;
 import br.com.erudio.unitetests.mapper.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -107,7 +105,7 @@ class BookServicesTest {
 
         when(repository.findAll()).thenReturn(list);
 
-        var bookList = service.findAll();
+        var bookList = service.findAll(pageble);
 
         assertNotNull(bookList);
         assertEquals(14, bookList.size());
