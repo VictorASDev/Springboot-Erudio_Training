@@ -5,7 +5,9 @@ package br.com.erudio.data.dto.v1;
 //import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import br.com.erudio.serializer.GenderSerializer;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.Objects;
 
 //Permite personalizar a ordem e o formato de um JSON
 //@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
+
+@JsonFilter("personFilter")
 public class PersonDTO implements Serializable {
 
     private Long id;
@@ -23,7 +27,15 @@ public class PersonDTO implements Serializable {
     private String firstName;
 
     //@JsonProperty("last_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String phoneNumber;
+
+    private String password;
+
+    private String salary;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthday;
@@ -85,14 +97,38 @@ public class PersonDTO implements Serializable {
         this.birthday = birthday;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof PersonDTO personDTO)) return false;
-        return Objects.equals(getId(), personDTO.getId()) && Objects.equals(getFirstName(), personDTO.getFirstName()) && Objects.equals(getLastName(), personDTO.getLastName()) && Objects.equals(getBirthday(), personDTO.getBirthday()) && Objects.equals(getAddress(), personDTO.getAddress()) && Objects.equals(getGender(), personDTO.getGender());
+        return Objects.equals(getId(), personDTO.getId()) && Objects.equals(getFirstName(), personDTO.getFirstName()) && Objects.equals(getLastName(), personDTO.getLastName()) && Objects.equals(getPhoneNumber(), personDTO.getPhoneNumber()) && Objects.equals(getPassword(), personDTO.getPassword()) && Objects.equals(getSalary(), personDTO.getSalary()) && Objects.equals(getBirthday(), personDTO.getBirthday()) && Objects.equals(getAddress(), personDTO.getAddress()) && Objects.equals(getGender(), personDTO.getGender());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getBirthday(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPhoneNumber(), getPassword(), getSalary(), getBirthday(), getAddress(), getGender());
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
 }
