@@ -47,6 +47,12 @@
 			<artifactId>jackson-dataformat-yaml</artifactId>
 		</dependency>
 
+		<!--Hateoas-->
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+		</dependency>
+
 		<!-- MySQL (Spring Boot 3.x usa esse) -->
 		<dependency>
 			<groupId>com.mysql</groupId>
