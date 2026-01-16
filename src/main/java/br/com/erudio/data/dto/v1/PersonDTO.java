@@ -21,6 +21,8 @@ import java.util.Objects;
 @Relation(collectionRelation = "people") //troca o nome da lista do __embedded
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
+    //RepresentationModel<PersonDTO> cuida dos links HATEOAS
+
     private Long id;
     private String firstName;
     private String lastName;
