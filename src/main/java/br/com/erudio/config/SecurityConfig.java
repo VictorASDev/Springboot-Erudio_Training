@@ -35,7 +35,7 @@ public class SecurityConfig {
         PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder (
                 "",
                 8,
-                1885000,
+                185000,
                 Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256
         );
 
@@ -54,6 +54,7 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         JwtTokenFilter filter = new JwtTokenFilter(tokenProvider);
 

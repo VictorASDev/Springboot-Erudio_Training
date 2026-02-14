@@ -1,5 +1,10 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br
+file:
+  upload-dir: /Documents/projetos/Code/UploadDir
+email:
+  subject: "Default Subject"
+  message: "Default Message"
 security:
   jwt:
     token:
@@ -20,6 +25,21 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enabled: true
+      mail.smtp.starttls.required: true
 spring-doc:
   paths-to-match: /api/**/v1/**
   swagger-ui:

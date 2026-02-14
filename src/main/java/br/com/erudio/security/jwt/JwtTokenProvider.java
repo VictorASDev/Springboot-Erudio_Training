@@ -44,7 +44,7 @@ public class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    //Cria uma nova credencial de acesso usando nome e roles do uuário
+    //Cria uma nova credencial de acesso usando nome e roles do usuário
     public TokenDTO createAccessToken(String username, List<String> roles) {
 
         Date now = new Date();
@@ -53,9 +53,23 @@ public class JwtTokenProvider {
         String refreshToken = getRefreshToken(username, roles, now);
 
         return new TokenDTO (
-                username, true, now, validity,
-                accessToken, refreshToken
+                accessToken, true, now, validity, refreshToken, username
         );
+    }
+
+    public TokenDTO refreshToken(String refreshToken) {
+
+        if(tokenContainsBearer(refreshToken)) {
+            refreshToken = refreshToken.substring("Bearer ".length());
+        }
+
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(refreshToken);
+
+        var username = decodedJWT.getSubject();
+        var roles = decodedJWT.getClaim("roles").asList(String.class);
+
+        return createAccessToken(username, roles);
     }
 
     private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
@@ -101,12 +115,13 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
 
-        if(!StringUtils.isEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if(tokenContainsBearer(bearerToken)) {
             return bearerToken.substring("Bearer ".length());
-        } else {
-            throw new InvalidJwtAuthenticationException("Invalid JWT Token");
         }
+
+        return null;
     }
+
 
     public Boolean validateToken(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
@@ -119,5 +134,9 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             throw new InvalidJwtAuthenticationException("Expired or Invalid JWT Token!");
         }
+    }
+
+    private static boolean tokenContainsBearer(String refreshToken) {
+        return !StringUtils.isEmpty(refreshToken) && refreshToken.startsWith("Bearer ");
     }
 }

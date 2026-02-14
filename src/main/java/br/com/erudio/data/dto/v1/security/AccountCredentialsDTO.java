@@ -8,9 +8,16 @@ public class AccountCredentialsDTO implements Serializable {
     private static final long SerialVersionUID = 1L;
 
     private String username;
+    private String fullname;
     private String password;
 
     public AccountCredentialsDTO() {
+    }
+
+    public AccountCredentialsDTO(String username, String fullname, String password) {
+        this.username = username;
+        this.fullname = fullname;
+        this.password = password;
     }
 
     public String getPassword() {
@@ -29,14 +36,22 @@ public class AccountCredentialsDTO implements Serializable {
         this.username = username;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof AccountCredentialsDTO that)) return false;
-        return Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getPassword(), that.getPassword());
+        return Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getFullname(), that.getFullname()) && Objects.equals(getPassword(), that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword());
+        return Objects.hash(getUsername(), getFullname(), getPassword());
     }
 }

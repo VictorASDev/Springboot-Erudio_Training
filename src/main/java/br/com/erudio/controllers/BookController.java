@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/books/v1")
+@RequestMapping("/api/books")
 @Tag(name = "Books", description = "Endpoint for Managing Books")
 public class BookController implements br.com.erudio.controllers.docs.BookControllerDocs {
     private final BookServices services;
