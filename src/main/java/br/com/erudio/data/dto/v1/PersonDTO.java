@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -21,6 +22,10 @@ import java.util.Objects;
 @Relation(collectionRelation = "people") //troca o nome da lista do __embedded
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    //RepresentationModel<PersonDTO> cuida dos links HATEOAS
     private Long id;
     private String firstName;
     private String lastName;

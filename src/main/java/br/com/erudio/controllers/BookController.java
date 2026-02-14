@@ -3,7 +3,6 @@ package br.com.erudio.controllers;
 import br.com.erudio.data.dto.v1.BookDTO;
 import br.com.erudio.services.BookServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
