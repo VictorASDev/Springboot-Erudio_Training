@@ -8,8 +8,8 @@ email:
 security:
   jwt:
     token:
-      secret-key: 53cr37
-      expire-length: 3600000
+      secret-key: ${JWT_SECRET}
+      expire-length: ${JWT_EXPIRE_MS:3600000}
 spring:
   application:
     name: rest-with-java-erudio
