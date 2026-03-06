@@ -1,5 +1,6 @@
 package br.com.erudio.controllers;
 
+import br.com.erudio.controllers.docs.AuthControllerDocs;
 import br.com.erudio.data.dto.v1.security.AccountCredentialsDTO;
 import br.com.erudio.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Authentication Endpoint")
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/api/auth/v1")
+public class AuthController implements AuthControllerDocs {
 
     private final AuthService service;
 
@@ -21,7 +21,7 @@ public class AuthController {
         this.service = service;
     }
 
-    @Operation(summary = "authenticates an user and returns a token")
+    @Override
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody AccountCredentialsDTO credentials) {
         if (credentialsIsInvalid(credentials))
@@ -35,7 +35,7 @@ public class AuthController {
         return ResponseEntity.ok().body(token);
     }
 
-    @Operation(summary = "Refresh Token for authenticated user and returns a token!")
+    @Override
     @PutMapping("/refresh/{username}")
     public ResponseEntity<?> refreshToken(@PathVariable("username") String username,
                                           @RequestHeader("Authorization") String refreshToken) {
@@ -48,6 +48,7 @@ public class AuthController {
         return ResponseEntity.ok().body(token);
     }
 
+    @Override
     @PostMapping(value = "/createUser",
             consumes = {
                     MediaType.APPLICATION_JSON_VALUE,
