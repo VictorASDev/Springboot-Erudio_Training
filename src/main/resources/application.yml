@@ -1,7 +1,7 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br
 file:
-  upload-dir: /Documents/projetos/Code/UploadDir
+  upload-dir: C:/Users/va001/Documents/projetos/Code/uploadDir
 email:
   subject: "Default Subject"
   message: "Default Message"
