@@ -39,7 +39,7 @@ public class AuthService {
         this.tokenProvider = tokenProvider;
     }
 
-    public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
+    public TokenDTO signIn(AccountCredentialsDTO credentials) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     credentials.getUsername(),
@@ -50,23 +50,19 @@ public class AuthService {
         var user = userRepository.findByUsername(credentials.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Username " + credentials.getUsername() + " not found!"));
 
-        var tokenResponse = tokenProvider.createAccessToken(
+        return tokenProvider.createAccessToken(
                 credentials.getUsername(),
                 user.getRoles()
         );
 
-
-        return ResponseEntity.ok(tokenResponse);
     }
 
-    public ResponseEntity<TokenDTO> refreshToken(String username, String refreshToken) {
+    public TokenDTO refreshToken(String username, String refreshToken) {
         var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found!"));
 
 
-        TokenDTO tokenResponse = tokenProvider.refreshToken(refreshToken);
-
-        return ResponseEntity.ok(tokenResponse);
+        return tokenProvider.refreshToken(refreshToken);
     }
 
     public AccountCredentialsDTO create(AccountCredentialsDTO user) {

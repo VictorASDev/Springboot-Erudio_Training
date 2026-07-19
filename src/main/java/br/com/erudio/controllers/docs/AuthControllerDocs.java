@@ -99,5 +99,5 @@ public interface AuthControllerDocs {
             }
 
     )
-    public ResponseEntity<AccountCredentialsDTO> create(@RequestBody AccountCredentialsDTO credentials);
+    public ResponseEntity<Void> create(@RequestBody AccountCredentialsDTO credentials);
 }

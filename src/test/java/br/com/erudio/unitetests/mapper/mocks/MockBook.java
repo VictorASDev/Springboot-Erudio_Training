@@ -8,15 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockBook {
-
-    public Book mockBook() {
-        return mockBook(0);
-    }
-
-    public BookDTO mocBookDto() {
-        return mockBookDto(0);
-    }
-
     public List<Book> mockBookList() {
         List<Book> list = new ArrayList<Book>();
 

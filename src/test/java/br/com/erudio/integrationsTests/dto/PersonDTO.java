@@ -1,17 +1,14 @@
-package br.com.erudio.data.dto.v1;
+package br.com.erudio.integrationsTests.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonProperty;
 //import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import br.com.erudio.model.Book;
-import br.com.erudio.serializer.GenderSerializer;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.Column;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -24,7 +21,8 @@ import java.util.Objects;
 //@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
 
 @Relation(collectionRelation = "people") //troca o nome da lista do __embedded
-public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
+@XmlRootElement
+public class PersonDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

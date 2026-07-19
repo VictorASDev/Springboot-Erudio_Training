@@ -1,7 +1,12 @@
+server:
+  port: 8080
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://erudio.com.br
 file:
   upload-dir: C:/Users/va001/Documents/projetos/Code/uploadDir
+logging:
+  level:
+    net.sf.jasperreports: TRACE
 email:
   subject: "Default Subject"
   message: "Default Message"

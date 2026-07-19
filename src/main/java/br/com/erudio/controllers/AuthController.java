@@ -32,7 +32,7 @@ public class AuthController implements AuthControllerDocs {
         if (token == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Client Request!");
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok(token);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AuthController implements AuthControllerDocs {
         
         var token = service.refreshToken(username, refreshToken);
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok(token);
     }
 
     @Override
@@ -56,10 +56,10 @@ public class AuthController implements AuthControllerDocs {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<AccountCredentialsDTO> create(@RequestBody AccountCredentialsDTO credentials) {
+    public ResponseEntity<Void> create(@RequestBody AccountCredentialsDTO credentials) {
         var response = service.create(credentials);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().build();
     }
 
 

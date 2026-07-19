@@ -61,7 +61,7 @@ public class SecurityConfig {
         return http
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(
                         session  -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
