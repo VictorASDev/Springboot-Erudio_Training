@@ -30,7 +30,6 @@ jobs:
         cache: maven
 
     - name: Build Application .jar
-      working-directory: ./rest-with-java-erudio
       run: mvn clean package
 
     - name: Docker Compose Build
@@ -38,7 +37,8 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run:  |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio: latest ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio:latest \
+        ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio:${{ github.run_id }}
         
         docker push ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/java-springboot-erudio:${{ github.run_id }}

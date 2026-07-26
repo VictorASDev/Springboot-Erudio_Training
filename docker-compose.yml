@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:9.7.1
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: java_springboot_erudio
+    ports:
+      - "3308:3306"
+    networks:
+      - erudio-network
+
+  java-springboot-erudio:
+    image: victorasdev/java-springboot-erudio
+    build: .
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/java_springboot_erudio?useTimezone=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: docker
+      SPRING_DATASOURCE_PASSWORD: admin123
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRE_MS: ${JWT_EXPIRE_MS}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    networks:
+      - erudio-network
+
+networks:
+  erudio-network:
+    driver: bridge
