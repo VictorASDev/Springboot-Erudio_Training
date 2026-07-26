@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:8888,http://localhost:3000,https://erudio.com.br,https://www.erudio.com.br
 file:
-  upload-dir: /home/runner/work/Springboot-Erudio_Training/uploadDir
+  upload-dir: ${java.io.tmpdir}/uploadDir
 logging:
   level:
     net.sf.jasperreports: TRACE
