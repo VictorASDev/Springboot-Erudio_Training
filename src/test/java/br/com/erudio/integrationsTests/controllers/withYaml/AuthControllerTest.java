@@ -13,19 +13,23 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.EncoderConfig.encoderConfig;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthControllerTest extends AbstractIntegrationTest {
 
     private static TokenDTO token;
     private static YAMLMapper objectMapper;
     private static RequestSpecification specification;
+
+    @LocalServerPort
+    private int port;
 
     @BeforeAll
     static void setUp() {
@@ -50,7 +54,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
 
         token = given()
                 .basePath("api/auth/v1/signin")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_YAML_VALUE)
                 .accept(MediaType.APPLICATION_YAML_VALUE)
                 .body(credentials, objectMapper)
@@ -72,7 +76,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
 
         token = given()
                 .basePath("/api/auth/v1/refresh")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_YAML_VALUE)
                 .accept(MediaType.APPLICATION_YAML_VALUE)
                     .pathParam("username", token.getUsername())

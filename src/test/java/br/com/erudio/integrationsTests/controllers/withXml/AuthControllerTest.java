@@ -18,12 +18,16 @@ import org.springframework.http.MediaType;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthControllerTest extends AbstractIntegrationTest {
 
     private static TokenDTO token;
     private static XmlMapper objectMapper;
+
+    @LocalServerPort
+    private int port;
 
 
     @BeforeAll
@@ -41,7 +45,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
 
         var content = given()
                 .basePath("api/auth/v1/signin")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_XML_VALUE)
                 .accept(MediaType.APPLICATION_XML_VALUE)
                 .body(credentials)
@@ -65,7 +69,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
 
         var content = given()
                 .basePath("/api/auth/v1/refresh")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_XML_VALUE)
                 .accept(MediaType.APPLICATION_XML_VALUE)
                     .pathParam("username", token.getUsername())

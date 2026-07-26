@@ -16,12 +16,14 @@ import org.springframework.http.MediaType;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthControllerTest extends AbstractIntegrationTest {
 
+    @LocalServerPort
+    private int port;
+    
     private static TokenDTO token;
-
 
     @BeforeAll
     static void setUp() {
@@ -36,7 +38,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
 
         token = given()
                 .basePath("api/auth/v1/signin")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(credentials)
                 .when()
@@ -56,7 +58,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
     void refreshToken() {
         token = given()
                 .basePath("/api/auth/v1/refresh")
-                .port(TestConfigs.SERVER_PORT)
+                .port(port)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .pathParam("username", token.getUsername())
                     .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + token.getRefreshToken())
