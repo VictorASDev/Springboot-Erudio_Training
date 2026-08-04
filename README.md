@@ -1,5 +1,7 @@
 # Spring Boot - Estudos 
 
+[![Continuos Integration and Delivery with Github Actions](https://github.com/VictorASDev/Springboot-Erudio_Training/actions/workflows/continuous-deployment.yml/badge.svg)](https://github.com/VictorASDev/Springboot-Erudio_Training/actions/workflows/continuous-deployment.yml)
+
 ![Java](https://img.shields.io/badge/Java-21-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4-brightgreen)
 ![MySQL](https://img.shields.io/badge/MySQL-Relational_DB-orange)
